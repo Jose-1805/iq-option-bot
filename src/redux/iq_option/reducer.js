@@ -3,17 +3,22 @@ import types from "./types";
 
 const initState = {
     ws: null,
+    time: null,
     ssid: null,
     profile: null,
     demo_balance_id: null,
     real_balance_id: null,
     connection_state: params.connectionStates.disconnected,
+    turbo_actives: {},
+    binary_actives: {},
 };
 
 const reducer = (state = initState, action) => {
     switch (action.type) {
         case types.SET_WS:
             return Object.assign({}, state, { ws: action.ws });
+        case types.SET_TIME:
+            return Object.assign({}, state, { time: action.time });
         case types.SET_SSID:
             return Object.assign({}, state, { ssid: action.ssid });
         case types.SET_PROFILE:
@@ -30,8 +35,16 @@ const reducer = (state = initState, action) => {
             return Object.assign({}, state, {
                 connection_state: action.connection_state,
             });
+        case types.SET_TURBO_ACTIVES:
+            return Object.assign({}, state, {
+                turbo_actives: action.actives,
+            });
+        case types.SET_BINARY_ACTIVES:
+            return Object.assign({}, state, {
+                binary_actives: action.actives,
+            });
         default:
-            return initState;
+            return state;
     }
 };
 

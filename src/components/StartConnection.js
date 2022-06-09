@@ -1,19 +1,25 @@
-import { Box, Button, TextField, Typography } from "@mui/material";
 import React from "react";
+import { Box, Button, TextField, Typography } from "@mui/material";
 import { useSelector } from "react-redux";
+import useIqOptionActions from "../hooks/iq_option/UseIqOptionActions";
+import useIqOption from "../hooks/iq_option/UseIqOption";
 import params from "../config/params";
-import useReducerActions from "../hooks/UseReducerActions";
-import useIqOption from "../hooks/UseIqOption";
-import useIqOptionSubscriptions from "../hooks/UseIqOptionSubscriptions";
+import useIqOptionQueries from "../hooks/iq_option/UseIqOptionQueries";
+import SelectActive from "./helpers/SelectActive";
 
 const StartConnection = () => {
     const connection_state = useSelector(
-        (state) => state.data.connection_state
+        (state) => state.iq_option.connection_state
     );
-    const { actSetSsid } = useReducerActions();
+    const turbo_actives = useSelector((state) => state.iq_option.turbo_actives);
+    const { actSetSsid } = useIqOptionActions();
     const { connect, disconnect, send } = useIqOption();
-    const { subscribeCandles } = useIqOptionSubscriptions(send);
-    const ssid = useSelector((state) => state.data.ssid);
+    const { getInitializationData } = useIqOptionQueries(send);
+    const ssid = useSelector((state) => state.iq_option.ssid);
+    const current_pattern = useSelector(
+        (state) => state.bot_information.current_pattern
+    );
+    const active_id = useSelector((state) => state.bot_information.active_id);
 
     return (
         <React.Fragment>
@@ -56,19 +62,25 @@ const StartConnection = () => {
                     >
                         Desconectar
                     </Button>
-                    <Button
-                        color="primary"
-                        variant="contained"
-                        onClick={() => {
-                            const unsubscribe = subscribeCandles(1, 60);
-
-                            setTimeout(() => {
-                                unsubscribe();
-                            }, 10000);
-                        }}
-                    >
-                        Conectar al live
-                    </Button>
+                    {Object.keys(turbo_actives).length ? (
+                        <React.Fragment>
+                            <SelectActive send={send} />
+                            <Typography>
+                                {"Activo seleccionado: " + active_id}
+                            </Typography>
+                            <Typography>
+                                {"Patrón actual: " + current_pattern}
+                            </Typography>
+                        </React.Fragment>
+                    ) : (
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={getInitializationData}
+                        >
+                            Consultar activos de opciones
+                        </Button>
+                    )}
                 </Box>
             )}
         </React.Fragment>

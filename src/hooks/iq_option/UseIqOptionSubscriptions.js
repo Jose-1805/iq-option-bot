@@ -38,7 +38,7 @@ const useIqOptionSubscriptions = (send) => {
      * @param {integer} active_id       Identificador del activo
      * @returns function
      */
-    const subscribeTradermood = (
+    const subscribeTradersMood = (
         instrumentType,
         active_id,
         only_return_unsubscribe = false
@@ -57,18 +57,6 @@ const useIqOptionSubscriptions = (send) => {
         };
 
         if (!only_return_unsubscribe) {
-            send({
-                name: "sendMessage",
-                msg: {
-                    name: "get-traders-mood",
-                    version: "1.0",
-                    body: {
-                        instrument: instrumentType,
-                        asset_id: active_id,
-                    },
-                },
-            });
-
             send(data);
         }
 
@@ -308,7 +296,7 @@ const useIqOptionSubscriptions = (send) => {
 
     return {
         subscribeCandles,
-        subscribeTradermood,
+        subscribeTradersMood,
         subscribePortfolio,
         subscribeLiveDeal,
         subscribeCommissionChanged,

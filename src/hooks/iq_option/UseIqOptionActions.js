@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import types from "../redux/data/types";
+import types from "../../redux/iq_option/types";
 
-const useReducerActions = () => {
+const useIqOptionActions = () => {
     const dispatch = useDispatch();
 
     /**
@@ -13,6 +13,18 @@ const useReducerActions = () => {
         dispatch({
             type: types.SET_WS,
             ws,
+        });
+    };
+
+    /**
+     * Asignación marca de tiempo sincronizada
+     *
+     * @param {WebSocket} ws
+     */
+    const actSetTime = (time) => {
+        dispatch({
+            type: types.SET_TIME,
+            time,
         });
     };
 
@@ -76,14 +88,41 @@ const useReducerActions = () => {
         });
     };
 
+    /**
+     * Asignación activos para operaciones turbo
+     *
+     * @param {object} actives
+     */
+    const actSetTurboActives = (actives) => {
+        dispatch({
+            type: types.SET_TURBO_ACTIVES,
+            actives,
+        });
+    };
+
+    /**
+     * Asignación activos para operaciones binarias
+     *
+     * @param {object} actives
+     */
+    const actSetBinaryActives = (actives) => {
+        dispatch({
+            type: types.SET_BINARY_ACTIVES,
+            actives,
+        });
+    };
+
     return {
         actSetWs,
+        actSetTime,
         actSetSsid,
         actSetProfile,
         actSetDemoBalanceId,
         actSetRealBalanceId,
         actSetConnectionState,
+        actSetTurboActives,
+        actSetBinaryActives,
     };
 };
 
-export default useReducerActions;
+export default useIqOptionActions;
