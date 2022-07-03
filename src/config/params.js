@@ -11,6 +11,17 @@ const params = {
         2: "conectado",
         3: "desconectando",
     },
+    configurationStates: {
+        no_applied: 0,
+        applying: 1,
+        applied: 2,
+    },
+    configurationStateNames: {
+        0: "configuración no aplicada",
+        1: "aplicando configuración",
+        2: "configuración aplicada",
+    },
+    item_pattern_length: 5,
 };
 
 export default params;

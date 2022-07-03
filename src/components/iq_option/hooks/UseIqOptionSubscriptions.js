@@ -50,7 +50,7 @@ const useIqOptionSubscriptions = (send) => {
                 params: {
                     routingFilters: {
                         instrument: instrumentType,
-                        asset_id: active_id,
+                        asset_id: parseInt(active_id),
                     },
                 },
             },

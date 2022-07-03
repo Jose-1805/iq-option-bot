@@ -27,9 +27,9 @@ const useIqOptionQueries = (send) => {
                 version: "2.0",
                 body: {
                     active_id: parseInt(active_id), //79,
-                    size: size, //60,
-                    from_id: from_id, //2392495,
-                    to_id: to_id, //2392509,
+                    size: parseInt(size), //60,
+                    from_id: parseInt(from_id), //2392495,
+                    to_id: parseInt(to_id), //2392509,
                     split_normalization: true,
                     only_closed: true,
                 },
@@ -114,7 +114,7 @@ const useIqOptionQueries = (send) => {
                 version: "1.0",
                 body: {
                     instrument: instrument_type,
-                    asset_id: active_id,
+                    asset_id: parseInt(active_id),
                 },
             },
         });

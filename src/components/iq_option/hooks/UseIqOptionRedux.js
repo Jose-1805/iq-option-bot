@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import types from "../../redux/iq_option/types";
+import types from "../redux/types";
 
-const useIqOptionActions = () => {
+const useIqOptionRedux = () => {
     const dispatch = useDispatch();
 
     /**
@@ -9,7 +9,7 @@ const useIqOptionActions = () => {
      *
      * @param {WebSocket} ws
      */
-    const actSetWs = (ws) => {
+    const setWs = (ws) => {
         dispatch({
             type: types.SET_WS,
             ws,
@@ -21,7 +21,7 @@ const useIqOptionActions = () => {
      *
      * @param {WebSocket} ws
      */
-    const actSetTime = (time) => {
+    const setTime = (time) => {
         dispatch({
             type: types.SET_TIME,
             time,
@@ -33,7 +33,7 @@ const useIqOptionActions = () => {
      *
      * @param {string} ssid
      */
-    const actSetSsid = (ssid) => {
+    const setSsid = (ssid) => {
         dispatch({
             type: types.SET_SSID,
             ssid,
@@ -45,7 +45,16 @@ const useIqOptionActions = () => {
      *
      * @param {object} profile
      */
-    const actSetProfile = (profile) => {
+    const setProfile = (profile) => {
+        const keys = Object.keys(profile.balances);
+
+        for (let i = 0; i < keys.length; i++) {
+            if (profile.balances[i].type === 4) {
+                setDemoBalanceId(profile.balances[i].id);
+            } else if (profile.balances[i].type === 1) {
+                setRealBalanceId(profile.balances[i].id);
+            }
+        }
         dispatch({
             type: types.SET_PROFILE,
             profile,
@@ -57,7 +66,7 @@ const useIqOptionActions = () => {
      *
      * @param {object} balance_id
      */
-    const actSetDemoBalanceId = (balance_id) => {
+    const setDemoBalanceId = (balance_id) => {
         dispatch({
             type: types.SET_DEMO_BALANCE_ID,
             balance_id,
@@ -69,7 +78,7 @@ const useIqOptionActions = () => {
      *
      * @param {object} balance_id
      */
-    const actSetRealBalanceId = (balance_id) => {
+    const setRealBalanceId = (balance_id) => {
         dispatch({
             type: types.SET_REAL_BALANCE_ID,
             balance_id,
@@ -81,7 +90,7 @@ const useIqOptionActions = () => {
      *
      * @param {integer} connection_state
      */
-    const actSetConnectionState = (connection_state) => {
+    const setConnectionState = (connection_state) => {
         dispatch({
             type: types.SET_CONNECTION_STATE,
             connection_state,
@@ -93,7 +102,7 @@ const useIqOptionActions = () => {
      *
      * @param {object} actives
      */
-    const actSetTurboActives = (actives) => {
+    const setTurboActives = (actives) => {
         dispatch({
             type: types.SET_TURBO_ACTIVES,
             actives,
@@ -105,24 +114,40 @@ const useIqOptionActions = () => {
      *
      * @param {object} actives
      */
-    const actSetBinaryActives = (actives) => {
+    const setBinaryActives = (actives) => {
         dispatch({
             type: types.SET_BINARY_ACTIVES,
             actives,
         });
     };
 
+    /**
+     *
+     * @param {integer} active_id
+     * @param {string} instrument_type
+     * @param {integer} commission
+     */
+    const setCommissionValue = (active_id, instrument_type, commission) => {
+        dispatch({
+            type: types.SET_COMMISSION_VALUE,
+            active_id,
+            instrument_type,
+            commission,
+        });
+    };
+
     return {
-        actSetWs,
-        actSetTime,
-        actSetSsid,
-        actSetProfile,
-        actSetDemoBalanceId,
-        actSetRealBalanceId,
-        actSetConnectionState,
-        actSetTurboActives,
-        actSetBinaryActives,
+        setWs,
+        setTime,
+        setSsid,
+        setProfile,
+        setDemoBalanceId,
+        setRealBalanceId,
+        setConnectionState,
+        setTurboActives,
+        setBinaryActives,
+        setCommissionValue,
     };
 };
 
-export default useIqOptionActions;
+export default useIqOptionRedux;

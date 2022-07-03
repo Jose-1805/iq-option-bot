@@ -1,11 +1,11 @@
 import { Provider } from "react-redux";
+import Start from "./components/Start";
 import store from "./redux/store";
-import StartConnection from "./components/StartConnection";
 
 function App() {
     return (
         <Provider store={store}>
-            <StartConnection />
+            <Start />
         </Provider>
     );
 }
