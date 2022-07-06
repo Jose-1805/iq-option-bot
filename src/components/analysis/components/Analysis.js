@@ -127,3 +127,9 @@ const Analysis = () => {
 };
 
 export default Analysis;
+/*
+SELECT * FROM `operations` WHERE operations.traders_mood < 55 AND profit_percentage < 87 AND (traders_mood < 33 OR traders_mood > 38);
+SELECT * FROM `operations` WHERE profit_percentage < 87 AND traders_mood >= 33 AND traders_mood <= 38;
+
+SELECT * FROM `operations` WHERE traders_mood >= 55;
+*/

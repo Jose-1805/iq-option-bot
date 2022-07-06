@@ -404,6 +404,7 @@ const useIqOption = () => {
                             "UPDATE operations SET " +
                             ("option_id=" + data.msg.option_id + ",") +
                             ("created_at=" + data.msg.created_at + ",") +
+                            ("option_value=" + data.msg.value + ",") +
                             ("expiration=" +
                                 data.msg.expiration_time +
                                 "000,") +
@@ -413,7 +414,7 @@ const useIqOption = () => {
                             data.msg.active_id +
                             " AND configuration_id = 1 AND option_type = 4 AND direction = " +
                             direction +
-                            ";";
+                            " AND option_id IS NULL;";
                         localStorage.setItem("queries", queries);
                         break;
                     case "option-closed":

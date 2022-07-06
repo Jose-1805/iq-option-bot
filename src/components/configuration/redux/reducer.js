@@ -235,7 +235,9 @@ const reducer = (state = initState, action) => {
                 (localStorage.getItem("queries")
                     ? localStorage.getItem("queries")
                     : "") +
-                "INSERT INTO operations (active_id, active_name, option_type, traders_mood, direction, number_repetitions, percentage_repetitions, total_repetitions, pattern, pattern_length, info_dates, volume_data, configuration_id) VALUES (" +
+                "DELETE FROM operations WHERE active_id = " +
+                active_id +
+                " AND option_id IS NULL; INSERT INTO operations (active_id, active_name, option_type, traders_mood, direction, number_repetitions, percentage_repetitions, total_repetitions, pattern, pattern_length, info_dates, volume_data, configuration_id) VALUES (" +
                 (active_id + ",'") +
                 (active_id in active_names
                     ? active_names[active_id] + "',"
